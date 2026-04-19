@@ -7,10 +7,12 @@ from datetime import datetime
 from config_loader import load_config
 
 BASE_DIR       = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR       = os.path.join(BASE_DIR, "data")
+# Redirect to the root's server_data directory for sync with Web version
+DATA_DIR       = os.path.abspath(os.path.join(BASE_DIR, "..", "server_data"))
 BACKUP_DIR     = os.path.join(DATA_DIR, "backups")
 APPLICANTS_FILE = os.path.join(DATA_DIR, "applicants.json")
 USERS_FILE      = os.path.join(DATA_DIR, "users.json")
+CONFIG_FILE     = os.path.join(DATA_DIR, "config.json")
 AUDIT_LOG_FILE  = os.path.join(DATA_DIR, "audit_log.jsonl")
 
 os.makedirs(DATA_DIR, exist_ok=True)

@@ -6,7 +6,8 @@ import json
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CONFIG_FILE = os.path.join(BASE_DIR, "config.json")
+# Redirect to the root's server_data directory for sync with Web version
+CONFIG_FILE = os.path.abspath(os.path.join(BASE_DIR, "..", "server_data", "config.json"))
 
 _cache = None
 
