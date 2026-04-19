@@ -173,9 +173,14 @@ def delete_user(user_id):
 
 # ── APPLICANTS ────────────────────────────────────────────────────────────────
 def load_applicants():
-    _init_file(APPLICANTS_FILE, DEFAULT_APPLICANTS)
     data = _load(APPLICANTS_FILE)
-    # auto-score on load and persist if changed
+    if not data: # Handle empty file initialized by _load
+        data = DEFAULT_APPLICANTS
+    return data
+
+def run_auto_sync():
+    """Manual trigger to update scores across files"""
+    data = _load(APPLICANTS_FILE)
     changed = False
     for a in data:
         new_score, new_status = compute_score(a)
@@ -185,7 +190,7 @@ def load_applicants():
             changed = True
     if changed:
         _save(APPLICANTS_FILE, data)
-    return data
+    return changed
 
 def save_applicants(applicants):
     _save(APPLICANTS_FILE, applicants)

@@ -104,23 +104,47 @@ initFile(USERS_FILE, DEFAULT_USERS);
 initFile(APPLICANTS_FILE, DEFAULT_APPLICANTS);
 
 function loadJSON(file: string) {
-  try {
-    if (!fs.existsSync(file)) {
-      console.warn(`Warning: File ${file} not found. Returning default empty array.`);
+  let attempts = 0;
+  const maxAttempts = 5;
+  while (attempts < maxAttempts) {
+    try {
+      if (!fs.existsSync(file)) {
+        return [];
+      }
+      const data = fs.readFileSync(file, 'utf-8');
+      return JSON.parse(data);
+    } catch (err: any) {
+      if (err.code === 'EBUSY' || err.code === 'EPERM') {
+        attempts++;
+        // Sync wait for a few ms before retrying
+        const start = Date.now();
+        while (Date.now() - start < 50) {} 
+        continue;
+      }
+      console.error(`Error loading JSON from ${file}:`, err);
       return [];
     }
-    return JSON.parse(fs.readFileSync(file, 'utf-8'));
-  } catch (err) {
-    console.error(`Error loading JSON from ${file}:`, err);
-    return [];
   }
+  return [];
 }
 
 function saveJSON(file: string, data: any) {
-  try {
-    fs.writeFileSync(file, JSON.stringify(data, null, 2));
-  } catch (err) {
-    console.error(`Error saving JSON to ${file}:`, err);
+  let attempts = 0;
+  const maxAttempts = 5;
+  while (attempts < maxAttempts) {
+    try {
+      fs.writeFileSync(file, JSON.stringify(data, null, 2));
+      return;
+    } catch (err: any) {
+      if (err.code === 'EBUSY' || err.code === 'EPERM') {
+        attempts++;
+        const start = Date.now();
+        while (Date.now() - start < 50) {}
+        continue;
+      }
+      console.error(`Error saving JSON to ${file}:`, err);
+      return;
+    }
   }
 }
 
