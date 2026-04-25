@@ -57,12 +57,6 @@ cd desktop_version
 python main.py
 ```
 
-### 🌍 Global Access for Presentation (Ngrok)
-To allow your team or teachers to access the web version via their own devices over the internet:
-1. Install [ngrok](https://ngrok.com/).
-2. Run the web server using `npm run dev`.
-3. In a new terminal, run: `ngrok http 3000`.
-4. Share the generated "Forwarding" URL (e.g., `https://xxxx.ngrok-free.app`).
 
 ### Default Login
 - **Username**: `admin`
