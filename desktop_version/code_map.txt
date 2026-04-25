@@ -1,0 +1,64 @@
+================================================================================
+          GT-ASES: TEAM CODE MAP & FILE REPOSITORY (DESKTOP VERSION)
+================================================================================
+This map identifies which files contain the specific logic and contributions 
+of each team member before final integration.
+
+--------------------------------------------------------------------------------
+MEMBER: JOBERT DEXZ P. BAUTISTA
+ROLE: Project Leader & Master Compiler
+MODULES: System Shell, Integration Engine, & Advanced Ops
+--------------------------------------------------------------------------------
+FILES:
+• /desktop_version/main.py (App entry point & Threading)
+• /desktop_version/data_manager.py (Shared Data Sync & Retry Logic)
+• /desktop_version/config_loader.py (Central Rule Integration)
+• /desktop_version/pages/screening.py (Automated AI Math Integration)
+• /desktop_version/pages/export.py (Reporting System Consolidation)
+• /desktop_version/pages/users.py (Admin User Management Logic)
+• /desktop_version/pages/add_applicant.py (Data Persistence Integration)
+
+--------------------------------------------------------------------------------
+MEMBER: CHRISTINE JOY GALOPE ADSUARA
+ROLE: Lead UI/UX Designer
+MODULES: Design System & Styling Framework
+--------------------------------------------------------------------------------
+FILES:
+• /desktop_version/theme.py (The "Design System": Colors, Fonts, UI Standards)
+• Note: UI design standards from this file were applied by Jobert to all 
+  other windows to maintain the Globe Telecom branding.
+
+--------------------------------------------------------------------------------
+MEMBER: SAM
+ROLE: Developer
+MODULES: Login & Security Logic
+--------------------------------------------------------------------------------
+FILES:
+• /desktop_version/login.py (Raw Code for Authentication & User Entry)
+
+--------------------------------------------------------------------------------
+MEMBER: ANNE CHEL MARIE
+ROLE: Developer
+MODULES: Dashboard & Stats Logic
+--------------------------------------------------------------------------------
+FILES:
+• /desktop_version/dashboard.py (Internal logic for 'DashboardPage' class)
+• Contribution: Statistical aggregation & recent applicant sorting logic.
+
+--------------------------------------------------------------------------------
+MEMBER: JAN JEROX AGUSTIN
+ROLE: Developer
+MODULES: Records Management Logic
+--------------------------------------------------------------------------------
+FILES:
+• /desktop_version/pages/applicants.py (Raw Code for Search & Table Management)
+
+================================================================================
+FILE PATH SUMMARY:
+--------------------------------------------------------------------------------
+• Project Root Folder: /desktop_version/
+• Sub-page Logic: /desktop_version/pages/
+• All Data is synced to: /server_data/ (Shared with Web platform)
+================================================================================
+SAVED TO: /desktop_version/code_map.txt
+================================================================================

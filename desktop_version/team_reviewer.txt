@@ -1,0 +1,85 @@
+================================================================================
+          GT-ASES: TEAM TECHNICAL REVIEWER (INTEGRATED SYSTEM EDITION)
+================================================================================
+SCENARIO: This system is the result of a "Master Compilation." Each developer 
+provided "Raw Logic" for their module, which was then integrated and refined 
+by the Leader (Jobert) and the UI Designer (Adsuara) into a single tool.
+
+--------------------------------------------------------------------------------
+MEMBER: SAM (Developer - Login & Security Logic)
+--------------------------------------------------------------------------------
+Q: What was the "Raw Logic" you provided for the Login module?
+A: I focused on the authentication flow: verifying if a username exists, 
+   handling incorrect password alerts, and establishing the role-based 
+   permissions (Admin/Staff). I provided the core algorithms for Sam's security 
+   layer before Jobert integrated it into the main app shell.
+
+Q: How is the security implemented in your raw code?
+A: I used a validation loop that checks entries against the JSON database. 
+   I also implemented a "masking" feature (show="●") for the password field 
+   so that raw credentials are never visible on the screen.
+
+--------------------------------------------------------------------------------
+MEMBER: ANNE CHEL MARIE (Developer - Dashboard Logic)
+--------------------------------------------------------------------------------
+Q: What was your contribution to the raw system logic?
+A: I wrote the calculation logic for the Dashboard indicators. My code pulls 
+   the applicant data from the central file and mathematically counts the 
+   totals for 'Qualified' vs 'Disqualified' so the user sees real-time stats.
+
+Q: How did you handle the "Recent Applicants" data?
+A: I provided the logic to sort the large database by 'dateApplied'. I designed 
+   it to only grab the top 10 most recent entries to keep the dashboard fast 
+   and summarized while Jobert handled the UI bridge.
+
+--------------------------------------------------------------------------------
+MEMBER: JAN JEROX AGUSTIN (Developer - Records Management Logic)
+--------------------------------------------------------------------------------
+Q: What was the focus of your modular logic?
+A: I developed the search and filtering engine. My "Raw Code" scans every 
+   field in the database matching it against what the user types. I also 
+   defined the context-menu logic so HR can delete or view data quickly.
+
+Q: Why are there specific colors/icons in your table?
+A: While Adsuara handled the overall theme, I defined the "Status Mapping" 
+   logic—assigning specific symbols (✅/❌) to specific scores so the integration 
+   system knows exactly how to display a candidate's progress.
+
+--------------------------------------------------------------------------------
+MEMBER: CHRISTINE JOY GALOPE ADSUARA (Lead UI/UX Designer)
+--------------------------------------------------------------------------------
+Q: What was your role in helping Jobert compile the system?
+A: As the Lead UI Designer, I created the "Visual DNA" of the project. While 
+   members provided raw logic, I built the 'theme.py' and designed the layouts. 
+   I worked closely with Jobert to ensure that every "raw" module was given 
+   a professional Globe Telecom look before it was integrated.
+
+Q: How did you standardize the user experience across different modules?
+A: I defined common padding, button styles, and font sizes. I ensured that 
+   the "Dark Mode" theme was used in every window to keep the GT-ASES brand 
+   consistent, whether a user is looking at Sam's Login or Jerox's Directory.
+
+--------------------------------------------------------------------------------
+MEMBER/LEADER: JOBERT DEXZ P. BAUTISTA (Master Compiler & Lead Integrator)
+--------------------------------------------------------------------------------
+Q: Explain the process of "Compiling" these raw modules together.
+A: My role was the technical consolidation. I took the raw Python logic from Sam, 
+   Anchel, and Jerox and built the 'MainApp' shell to bridge them. I managed 
+   all the internal imports, fixed cross-module bugs, and applied the final 
+   UI designs I developed with Adsuara to make it one solid system.
+
+Q: How did you solve the synchronization for the integrated system?
+A: I built the `data_manager.py` layer to act as a bridge. This allowed 
+   everyone's separate modules to communicate with a single, shared database 
+   in the `/server_data` folder, while also implementing "File-Lock Protection" 
+   so the Web and Desktop apps can run at the same time without errors.
+
+Q: What was your most difficult technical integration?
+A: Ensuring the "Screening Logic" was consistent across the team's modules. 
+   I had to build a central `compute_score` function that both Jerox's 
+   Directory and Adsuara's Registration forms use to ensure the math is always 
+   perfectly synced across the whole project.
+
+================================================================================
+SAVED TO: /desktop_version/team_reviewer.txt
+================================================================================

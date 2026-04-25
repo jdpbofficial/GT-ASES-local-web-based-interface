@@ -1,0 +1,96 @@
+================================================================================
+          GT-ASES: DESKTOP SYSTEM WALKTHROUGH VIDEO SCRIPT
+================================================================================
+PROJECT: Globe Telecom Applicant Screening & Evaluation System (GT-ASES)
+FOCUS: Desktop Version (Integrated Logic & Sync Demo)
+TEAM: Jobert (Lead), Sam, Anchel, Jerox, Adsuara
+
+--------------------------------------------------------------------------------
+SCENE 1: INTRODUCTION & VISION
+PRESENTER: Jobert Dexz P. Bautista (Lead Integrator)
+--------------------------------------------------------------------------------
+[VISUAL: Screen shows the desktop wallpaper. The mouse moves to 'main.py' or 
+a shortcut and double-clicks it.]
+
+NARRATION: 
+"Welcome to the walkthrough of GT-ASES. My name is Jobert, the Lead Integrator. 
+Our team set out to build a system that bridges the gap between raw data collection 
+and professional evaluation. What you are seeing is the Desktop Edition—a result 
+of compiling modular logic from our developers into one unified, synchronized tool."
+
+--------------------------------------------------------------------------------
+SCENE 2: SECURE AUTHENTICATION
+PRESENTER: Sam (Security Logic)
+--------------------------------------------------------------------------------
+[VISUAL: The Login Window appears. Mouse clicks on the Username field.]
+
+NARRATION:
+"I'm Sam, and I handled the Authentication logic. The system begins with a 
+secure gate. Here, we demonstrate the login process using hashed credentials 
+stored in our shared JSON database. Notice the password masking for security. 
+Once I hit 'Sign In', the system validates the role and opens the main dashboard."
+
+--------------------------------------------------------------------------------
+SCENE 3: THE COMMAND CENTER
+PRESENTER: Anne Chel Marie (Dashboard Logic)
+--------------------------------------------------------------------------------
+[VISUAL: The Dashboard loads. Mouse hovers over the stat cards.]
+
+NARRATION:
+"I'm Anchel, and I developed the Dashboard logic. This is the heart of the HR 
+Command Center. Here, the system provides real-time counts of total, qualified, 
+and pending applicants. These aren't just static numbers—they are live-calculated 
+from our integrated database to give HR instant situational awareness."
+
+--------------------------------------------------------------------------------
+SCENE 4: UI DESIGN & REGISTRATION
+PRESENTER: Christine Joy Galope Adsuara (Lead UI & Entry Logic)
+--------------------------------------------------------------------------------
+[VISUAL: Mouse clicks 'Add Applicant'. A blue-themed form appears.]
+
+NARRATION:
+"I'm Adsuara, the Lead UI Designer. I established the 'Globe Brand' dark-mode 
+theme you see across all modules. For the Registration part, I built this 
+structured form. Watch as we enter a new applicant's details. Once saved, 
+this record is instantly synced and weighted against our scoring matrix, 
+making it ready for evaluation."
+
+--------------------------------------------------------------------------------
+SCENE 5: RECORDS MANAGEMENT & SEARCH
+PRESENTER: Jan Jerox Agustin (Records Logic)
+--------------------------------------------------------------------------------
+[VISUAL: Mouse clicks 'Applicants'. The table loads. Mouse types in the search bar.]
+
+NARRATION:
+"I'm Jerox. Once data is entered, managing it is key. I built this filtering 
+engine. As I type a name or position, the table updates instantly. We can also 
+right-click any record to view details or delete entries, allowing HR to 
+maintain a clean and accurate candidate database."
+
+--------------------------------------------------------------------------------
+SCENE 6: ADVANCED EVALUATION & EXPORT
+PRESENTER: Jobert Dexz P. Bautista (Lead Integrator)
+--------------------------------------------------------------------------------
+[VISUAL: Mouse clicks 'Screening', then clicks 'Run Re-Score'. Then clicks 'Export'.]
+
+NARRATION:
+"Back to Jobert. To tie everything together, I integrated a Screening Engine 
+that re-calculates scores based on the latest position requirements. Finally, 
+our Export module allows HR to generate census reports in CSV format for local 
+school reporting or company archives."
+
+--------------------------------------------------------------------------------
+SCENE 7: THE SYNC TRIUMPH & CONCLUSION
+PRESENTER: Jobert Dexz P. Bautista
+--------------------------------------------------------------------------------
+[VISUAL: Shows a quick side-by-side or mention of the Web version data matching.]
+
+NARRATION:
+"The true power of GT-ASES is the synchronization. Any applicant added here on 
+the desktop is available on the web, and vice versa. Our team successfully 
+integrated raw logic and professional design into one cohesive system. 
+Thank you for watching our walkthrough."
+
+--------------------------------------------------------------------------------
+FILE SAVED: /desktop_version/video_walkthrough_script.txt
+================================================================================

@@ -1,0 +1,75 @@
+================================================================================
+          GT-ASES: GLOBE TELECOM APPLICANT SCREENING & EVALUATION SYSTEM
+                    PROJECT PRESENTATION OUTLINE (DESKTOP VERSION)
+================================================================================
+
+TEAM ROLES & INTEGRATION SCENARIO:
+--------------------------------------------------------------------------------
+• PROJECT LEADER & MASTER COMPILER: Jobert Dexz P. Bautista
+  (Responsible for integrating raw code from all members into one unified system)
+• LEAD UI/UX DESIGNER: Christine Joy Galope Adsuara
+  (Responsible for the visual theme, consistency, and styling across all modules)
+• MODULE DEVELOPERS (RAW CODE CONTRIBUTORS):
+  - Anne Chel Marie (Anchel): Dashboard Module
+  - Jan Jerox Agustin (Jerox): Records Management Module
+  - Sam: Login & Security Module
+
+--------------------------------------------------------------------------------
+SLIDE 1: TITLE SLIDE
+--------------------
+• Project Title: GT-ASES (Integrated Desktop Edition)
+• Theme: From Raw Logic to Polished Productivity
+• Presented by: [Team Name/Section]
+
+SLIDE 2: THE COMPILER'S VISION (Leader: Jobert Dexz P. Bautista)
+-------------------------------------------------------------
+• The "Integration Challenge": Collecting raw functional code from 4 different 
+  developers and merging them into a single executable application.
+• Solving the "Sync" problem: Enabling one database for two platforms.
+
+SLIDE 3: LOGIN ARCHITECTURE (Presenter: Sam)
+--------------------------------------------
+• Focus: Raw Authentication Logic.
+• Implementation: Structured the user validation sequence and error handling 
+  logic before passing it to the Compiler for integration.
+
+SLIDE 4: THE VISUAL IDENTITY (Presenter: Christine Joy Galope Adsuara)
+------------------------------------------------------------------
+• Role: Lead UI Designer.
+• Focus: Styling & User Experience.
+• Contribution: Developed the 'theme.py' system (colors, fonts, layout standards) 
+  and worked with the Compiler to apply this "Globe Branding" to every raw module.
+
+SLIDE 5: DASHBOARD LOGIC (Presenter: Anne Chel Marie)
+-----------------------------------------------------
+• Focus: Functional Stats & Overview.
+• Contribution: Developed the raw data-fetching logic for the Recruitment 
+  Funnel and "Recent Applicants" feed.
+
+SLIDE 6: DATA SEARCH & RETRIEVAL (Presenter: Jan Jerox Agustin)
+------------------------------------------------------------
+• Focus: Functional Records management.
+• Contribution: Built the raw filtering and search logic that allows HR to 
+  find specific candidates instantly within the central treeview.
+
+SLIDE 7: SYSTEM CONSOLIDATION (Leader: Jobert Dexz P. Bautista)
+------------------------------------------------------------
+• Focus: Technical Integration & Error Resilience.
+• Key Work:
+  - Merged all raw Python modules into a single Navigational GUI.
+  - Implemented the "Collision Fix" to prevent data crashes.
+  - Developed the Screening Engine and Export modules that tie the system together.
+
+SLIDE 8: COLLABORATION SHOWCASE (Jobert & Adsuara)
+--------------------------------------------------
+• Live Demo: Adding a user and showing how the "Raw Code" logic meets the 
+  "UI Design" polish in the final integrated application.
+
+SLIDE 9: CONCLUSION & Q&A
+-------------------------
+• "A system is more than just code; it's the result of collaboration, 
+   design standards, and technical integration."
+
+--------------------------------------------------------------------------------
+SAVED TO: /desktop_version/presentation_outline.txt
+================================================================================
