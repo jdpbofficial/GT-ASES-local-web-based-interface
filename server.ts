@@ -4,7 +4,50 @@ import path from 'path';
 import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+
+// Replace bcrypt imports with crypto logic for Python sync
+function hashPassword(password: string): string {
+  const salt = crypto.randomBytes(16).toString('hex'); // 32 hex chars
+  const hashed = crypto.createHash('sha256').update(salt + password).digest('hex');
+  return `${salt}$${hashed}`;
+}
+
+function verifyPassword(stored: string, input: string): boolean {
+  // Handle bcrypt hashes from previous version (they start with $2b$, $2a$, etc.)
+  if (stored.startsWith('$2b$') || stored.startsWith('$2a$') || stored.startsWith('$2y$')) {
+    // We can't verify bcrypt without the library, so we'll treat them as invalid 
+    // or force a reset. For this specific project, let's allow a migration 
+    // if the password matches the default known ones, or just fail so they can be reset.
+    return false;
+  }
+
+  if (!stored.includes('$')) {
+    return stored === input;
+  }
+  const [salt, hashed] = stored.split('$');
+  const check = crypto.createHash('sha256').update(salt + input).digest('hex');
+  return check === hashed;
+}
+
+function migrateUsers(users: any[]) {
+  let changed = false;
+  users.forEach(user => {
+    // Reset defaults if they have bcrypt hashes (which we can't verify)
+    if (user.username === 'admin' && (user.password.startsWith('$2b$') || user.password === 'admin123')) {
+      user.password = hashPassword('admin123');
+      changed = true;
+    } else if (user.username === 'hrstaff' && (user.password.startsWith('$2b$') || user.password === 'staff123')) {
+      user.password = hashPassword('staff123');
+      changed = true;
+    } else if (!user.password.includes('$')) {
+      // Migrate plain text
+      user.password = hashPassword(user.password);
+      changed = true;
+    }
+  });
+  return changed;
+}
 
 // Extend Express Request interface
 interface AuthenticatedRequest extends Request {
@@ -80,8 +123,8 @@ const DEFAULT_CONFIG = {
 };
 
 const DEFAULT_USERS = [
-  { userID: 1, username: 'admin', password: bcrypt.hashSync('admin123', 10), role: 'Admin', fullName: 'HR Administrator' },
-  { userID: 2, username: 'hrstaff', password: bcrypt.hashSync('staff123', 10), role: 'Staff', fullName: 'HR Staff Member' },
+  { userID: 1, username: 'admin', password: 'admin123', role: 'Admin', fullName: 'HR Administrator' },
+  { userID: 2, username: 'hrstaff', password: 'staff123', role: 'Staff', fullName: 'HR Staff Member' },
 ];
 
 const DEFAULT_APPLICANTS = [
@@ -102,6 +145,9 @@ const DEFAULT_APPLICANTS = [
 initFile(CONFIG_FILE, DEFAULT_CONFIG);
 initFile(USERS_FILE, DEFAULT_USERS);
 initFile(APPLICANTS_FILE, DEFAULT_APPLICANTS);
+
+// Trigger migration on startup
+loadUsers();
 
 function loadJSON(file: string) {
   let attempts = 0;
@@ -186,6 +232,14 @@ function computeScore(app: any, config: any) {
   return { score, status };
 }
 
+function loadUsers() {
+  const users = loadJSON(USERS_FILE);
+  if (migrateUsers(users)) {
+    saveJSON(USERS_FILE, users);
+  }
+  return users;
+}
+
 async function startServer() {
   const app = express();
   app.use(express.json());
@@ -224,10 +278,10 @@ async function startServer() {
 
   app.post('/api/login', (req: Request, res: Response) => {
     const { username, password } = req.body;
-    const users = loadJSON(USERS_FILE);
+    const users = loadUsers();
     const user = users.find((u: any) => u.username === username);
 
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user && verifyPassword(user.password, password)) {
       const token = jwt.sign({ userID: user.userID, username: user.username, role: user.role, fullName: user.fullName }, JWT_SECRET, { expiresIn: '24h' });
       
       // Use more permissive settings for the preview environment (iframes)
@@ -314,7 +368,7 @@ async function startServer() {
 
   // User Management (Admin Only)
   app.get('/api/users', authenticateToken, isAdmin, (req: AuthenticatedRequest, res: Response) => {
-    const users = loadJSON(USERS_FILE).map((u: any) => {
+    const users = loadUsers().map((u: any) => {
       const { password, ...rest } = u;
       return rest;
     });
@@ -329,7 +383,7 @@ async function startServer() {
       return res.status(400).json({ error: 'All fields (username, password, role, fullName) are required.' });
     }
 
-    const users = loadJSON(USERS_FILE);
+    const users = loadUsers();
     if (users.find((u: any) => u.username === username)) {
       return res.status(400).json({ error: 'Username already exists.' });
     }
@@ -337,7 +391,7 @@ async function startServer() {
     const newUser = {
       userID: users.length > 0 ? Math.max(...users.map((u: any) => u.userID)) + 1 : 1,
       username,
-      password: bcrypt.hashSync(password, 10),
+      password: hashPassword(password),
       role,
       fullName
     };
@@ -351,7 +405,7 @@ async function startServer() {
     const id = parseInt(req.params.id);
     if (id === 1) return res.status(400).json({ error: 'Primary administrator cannot be deleted.' });
     
-    let users = loadJSON(USERS_FILE);
+    let users = loadUsers();
     users = users.filter((u: any) => u.userID !== id);
     saveJSON(USERS_FILE, users);
     res.json({ message: 'User deleted' });
@@ -363,11 +417,11 @@ async function startServer() {
     
     if (!newPassword) return res.status(400).json({ error: 'New password is required.' });
 
-    const users = loadJSON(USERS_FILE);
+    const users = loadUsers();
     const index = users.findIndex((u: any) => u.userID === id);
     
     if (index !== -1) {
-      users[index].password = bcrypt.hashSync(newPassword, 10);
+      users[index].password = hashPassword(newPassword);
       saveJSON(USERS_FILE, users);
       res.json({ message: 'Password reset successful' });
     } else {
