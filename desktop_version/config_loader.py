@@ -16,9 +16,10 @@ def load_config():
     global _cache
     if _cache is not None:
         return _cache
-    # The config file must already exist in server_data/ (created by the web server)
+    # Ensure the shared server_data directory exists for desktop mode
+    os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
     if not os.path.exists(CONFIG_FILE):
-        raise FileNotFoundError(f"Shared config not found: {CONFIG_FILE}. Please run the web server once first.")
+        _generate_default()
     with open(CONFIG_FILE, "r") as f:
         _cache = json.load(f)
     return _cache
