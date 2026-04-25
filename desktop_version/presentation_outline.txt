@@ -46,13 +46,16 @@ SLIDE 5: DASHBOARD LOGIC (Presenter: Anne Chel Marie)
 • Contribution: Developed the raw data-fetching logic for the Recruitment 
   Funnel and "Recent Applicants" feed.
 
-SLIDE 6: DATA SEARCH & RETRIEVAL (Presenter: Jan Jerox Agustin)
+SLIDE 6: DATA SEARCH & RETRIEVAL (Presenter: Jan JEROX AGUSTIN)
 ------------------------------------------------------------
 • Focus: Functional Records management.
-• Contribution: Built the raw filtering and search logic that allows HR to 
-  find specific candidates instantly within the central treeview.
+• Contribution: 
+  - Built the raw filtering and search logic for instant candidate retrieval.
+  - Developed the "Quick Action" context menu for rapid management.
+  - Implemented the "Detailed View" window that provides a comprehensive 
+    breakdown of an applicant's full profile beyond the directory table.
 
-SLIDE 7: SYSTEM CONSOLIDATION (Leader: Jobert Dexz P. Bautista)
+SLIDE 7: SYSTEM CONSOLIDATION (Leader: Jobert DEXZ P. BAUTISTA)
 ------------------------------------------------------------
 • Focus: Technical Integration & Error Resilience.
 • Key Work:

@@ -40,6 +40,12 @@ A: I developed the search and filtering engine. My "Raw Code" scans every
    field in the database matching it against what the user types. I also 
    defined the context-menu logic so HR can delete or view data quickly.
 
+Q: Explain the "Detailed View" feature you implemented.
+A: I created a dedicated Toplevel window that appears when you right-click 
+   an applicant. It breaks down information into sections (Personal, 
+   Professional, and AI Scoring) to give HR a deep dive into the candidate's 
+   actual qualifications beyond just the summary list.
+
 Q: Why are there specific colors/icons in your table?
 A: While Adsuara handled the overall theme, I defined the "Status Mapping" 
    logic—assigning specific symbols (✅/❌) to specific scores so the integration 

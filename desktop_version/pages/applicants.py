@@ -110,9 +110,19 @@ class ApplicantsPage:
     def _view_details(self):
         sel = self.tree.selection()
         if not sel: return
-        # Simple alert for now as full detail view is complex
+        
+        # Extract ID from string like "#1001"
         app_id_str = self.tree.item(sel[0])["values"][0].replace("#","")
-        messagebox.showinfo("Applicant Detail", f"Viewing details for Applicant #{app_id_str}\n(Detailed view coming soon)")
+        app_id = int(app_id_str)
+        
+        # Load full data to get the latest details
+        data = load_applicants()
+        applicant = next((a for a in data if a["applicantID"] == app_id), None)
+        
+        if applicant:
+            ApplicantDetailWindow(self.parent, applicant)
+        else:
+            messagebox.showerror("Error", "Could not find applicant record.")
 
     def _delete_record(self):
         sel = self.tree.selection()
@@ -124,3 +134,111 @@ class ApplicantsPage:
             delete_applicant(app_id)
             self._refresh_table()
             messagebox.showinfo("Success", "Record deleted successfully.")
+
+class ApplicantDetailWindow:
+    def __init__(self, parent, applicant):
+        # Create a top-level window
+        self.window = tk.Toplevel(parent)
+        self.window.title(f"Applicant Details - #{applicant['applicantID']}")
+        self.window.geometry("700x680")
+        self.window.configure(bg=BG_MAIN)
+        self.window.resizable(False, False)
+        self.window.grab_set() # Make it modal
+
+        self.app = applicant
+        self._build()
+
+    def _build(self):
+        # ── HEADER ──────────────────────────────────────────────────────────
+        header = tk.Frame(self.window, bg=BG_SIDEBAR, padx=30, pady=20)
+        header.pack(fill="x")
+        
+        status_color = STATUS_COLORS.get(self.app["status"], ACCENT)
+        
+        title_frame = tk.Frame(header, bg=BG_SIDEBAR)
+        title_frame.pack(side="left")
+        
+        tk.Label(title_frame, text=f"{self.app['firstName']} {self.app['lastName']}", 
+                 font=FONT_TITLE, bg=BG_SIDEBAR, fg=TEXT_PRIMARY).pack(anchor="w")
+        tk.Label(title_frame, text=f"Applicant ID: #{self.app['applicantID']}  |  Applied: {self.app['dateApplied']}", 
+                 font=FONT_BODY, bg=BG_SIDEBAR, fg=TEXT_MUTED).pack(anchor="w")
+
+        tk.Label(header, text=self.app["status"].upper(), font=FONT_H2,
+                 bg=status_color, fg=TEXT_WHITE, padx=12, pady=6).pack(side="right")
+
+        # ── MAIN CONTAINER ──────────────────────────────────────────────────
+        container = tk.Frame(self.window, bg=BG_MAIN, padx=30, pady=25)
+        container.pack(fill="both", expand=True)
+
+        # 1. Personal & Contact
+        sec1 = tk.Frame(container, bg=BG_MAIN)
+        sec1.pack(fill="x", pady=(0, 20))
+        
+        self._label_value(sec1, "Position Applied:", self.app["position"], 0, 0, col_span=2)
+        self._label_value(sec1, "Email Address:", self.app["email"], 1, 0)
+        self._label_value(sec1, "Contact Number:", self.app["contact"], 1, 1)
+        self._label_value(sec1, "Age:", str(self.app["age"]), 2, 0)
+        self._label_value(sec1, "Gender:", self.app["gender"], 2, 1)
+
+        tk.Frame(container, height=1, bg=BORDER).pack(fill="x", pady=10)
+
+        # 2. Qualifications
+        sec2 = tk.Frame(container, bg=BG_MAIN)
+        sec2.pack(fill="x", pady=10)
+        
+        self._label_value(sec2, "Education Level:", self.app["education"], 0, 0)
+        self._label_value(sec2, "Years of Experience:", self.app["experience"], 0, 1)
+        
+        # Skills Tags
+        tk.Label(sec2, text="Technical Skills:", font=FONT_H2, bg=BG_MAIN, fg=ACCENT).grid(row=2, column=0, sticky="w", pady=(15, 5))
+        skills_frame = tk.Frame(sec2, bg=BG_MAIN)
+        skills_frame.grid(row=3, column=0, columnspan=2, sticky="w")
+        
+        skills = self.app.get("skills", [])
+        if skills:
+            for skill in skills:
+                tk.Label(skills_frame, text=skill, font=FONT_SMALL, bg=BG_CARD, fg=TEXT_PRIMARY,
+                         padx=8, pady=4).pack(side="left", padx=(0, 6), pady=2)
+        else:
+            tk.Label(skills_frame, text="No skills listed", font=FONT_BODY, bg=BG_MAIN, fg=TEXT_MUTED).pack(side="left")
+
+        # Certifications Tags
+        tk.Label(sec2, text="Certifications:", font=FONT_H2, bg=BG_MAIN, fg=ACCENT).grid(row=4, column=0, sticky="w", pady=(15, 5))
+        certs_frame = tk.Frame(sec2, bg=BG_MAIN)
+        certs_frame.grid(row=5, column=0, columnspan=2, sticky="w")
+        
+        certs = self.app.get("certifications", [])
+        if certs:
+            for cert in certs:
+                tk.Label(certs_frame, text=cert, font=FONT_SMALL, bg=BG_INPUT, fg=SUCCESS,
+                         padx=8, pady=4).pack(side="left", padx=(0, 6), pady=2)
+        else:
+            tk.Label(certs_frame, text="No certifications listed", font=FONT_BODY, bg=BG_MAIN, fg=TEXT_MUTED).pack(side="left")
+
+        # 3. Final Scoring
+        tk.Frame(container, height=1, bg=BORDER).pack(fill="x", pady=20)
+        
+        score_frame = tk.Frame(container, bg=BG_CARD, padx=25, pady=20)
+        score_frame.pack(fill="x")
+        
+        tk.Label(score_frame, text="AI SCREENING EVALUATION RESULT", font=FONT_H3, bg=BG_CARD, fg=TEXT_SECONDARY).pack(anchor="w")
+        
+        inner_score = tk.Frame(score_frame, bg=BG_CARD)
+        inner_score.pack(fill="x", pady=10)
+        
+        tk.Label(inner_score, text=str(self.app["score"]), font=FONT_STAT, bg=BG_CARD, fg=ACCENT).pack(side="left")
+        tk.Label(inner_score, text="TOTAL PTS", font=FONT_H3, bg=BG_CARD, fg=TEXT_MUTED).pack(side="left", padx=10, pady=(12, 0))
+
+        # ── FOOTER ──────────────────────────────────────────────────────────
+        footer = tk.Frame(self.window, bg=BG_SIDEBAR, pady=15)
+        footer.pack(fill="x", side="bottom")
+        
+        tk.Button(footer, text="  CLOSE DETAILS  ", font=FONT_NAV, bg=BG_HOVER, fg=TEXT_PRIMARY,
+                  relief="flat", cursor="hand2", padx=20, pady=8, 
+                  command=self.window.destroy).pack()
+
+    def _label_value(self, parent, label, value, row, col, col_span=1):
+        f = tk.Frame(parent, bg=BG_MAIN)
+        f.grid(row=row, column=col, columnspan=col_span, sticky="w", padx=(0, 40), pady=10)
+        tk.Label(f, text=label, font=FONT_SMALL, bg=BG_MAIN, fg=TEXT_MUTED).pack(anchor="w")
+        tk.Label(f, text=value, font=FONT_H2, bg=BG_MAIN, fg=TEXT_PRIMARY).pack(anchor="w")
